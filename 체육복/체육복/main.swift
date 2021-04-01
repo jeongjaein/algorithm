@@ -10,18 +10,13 @@ import Foundation
 
 
 func solution(_ n:Int, _ lost:[Int], _ reserve:[Int]) -> Int {
-    var lostHead = 0
-    var borrow = 0
+    var lostList = lost
     for i in 0..<reserve.count {
-        if abs(lost[lostHead] - reserve[i]) == 1 {
-            lostHead += 1
-            borrow += 1
-            if lostHead >= lost.count {
-                break
-            }
+        if let borrow = lostList.firstIndex(where: { abs( $0 - reserve[i] ) == 1}) {
+            lostList.remove(at: borrow)
         }
     }
-    return (n - lost.count + borrow)
+    return (n - lostList.count)
 }
 
 print(solution(5, [2, 4], [1, 3, 5]))
